@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+    api:
+        build:
+            context: ./backend
+    ports:
+        - "8000:8000"
+    environment:
+        - DATABASE_URL=sqlite:////app/data/romarr.db
+    volumes:
+        - ./backend/app:/app/app # live code reload
+        - romarr_data:/app/data # persistent DB
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+volumes:
+    romarr_data:
